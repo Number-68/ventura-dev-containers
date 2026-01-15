@@ -2,8 +2,6 @@
 # installing base image.
 FROM mcr.microsoft.com/devcontainers/base:noble
 
-
-
 #installing ruby system dependencies. 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -17,7 +15,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
     gnupg
-
 
 
 # installing and compiling ruby from source
@@ -34,8 +31,6 @@ RUN curl -fsSL https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR}/ruby-${RUBY_VE
     && rm -rf ruby-${RUBY_VERSION} ruby.tar.gz
 
 
-
-
 # installing node
 RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
@@ -48,10 +43,7 @@ RUN mkdir -p /etc/apt/keyrings && \
      
 
 
-
-
 # configure Bundler + Gem installation paths 
-
 ENV GEM_HOME=/usr/local/bundle 
 ENV BUNDLE_PATH=/usr/local/bundle 
 ENV BUNDLE_BIN=/usr/local/bundle/bin 
@@ -60,8 +52,6 @@ ENV PATH="$BUNDLE_BIN:$PATH"
 # create bundle directory and give correct permissions 
 RUN mkdir -p /usr/local/bundle \
     && chown -R vscode:vscode /usr/local/bundle 
-
-
 
 
 # installing gems 
@@ -73,13 +63,9 @@ RUN gem install rails -v ${RAILS_VERSION}
 RUN chown -R vscode:vscode /usr/local/bundle
 
 
-
-
 # error checking
 RUN git --version && \
     ruby --version && \
     rails --version && \
     node --version && \
     npm --version
-
-

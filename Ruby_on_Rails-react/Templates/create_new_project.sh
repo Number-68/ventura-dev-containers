@@ -32,3 +32,19 @@ bundle exec vite install
 
 # install react with npm
 npm install react react-dom
+
+
+
+# create a dev script inside project
+cat << 'EOF' > dev.sh
+#!/bin/bash
+
+# Start Rails server
+bin/rails server &
+
+# Start Vite dev server
+bin/vite dev
+EOF
+
+# give permissions
+chmod +x dev.sh
