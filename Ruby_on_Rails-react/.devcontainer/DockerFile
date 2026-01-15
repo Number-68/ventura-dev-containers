@@ -50,24 +50,17 @@ RUN mkdir -p /etc/apt/keyrings && \
 
 
 
-# Configure Bundler + Gem installation paths 
+# configure Bundler + Gem installation paths 
 
-# --------------------------------------------------------- 
 ENV GEM_HOME=/usr/local/bundle 
 ENV BUNDLE_PATH=/usr/local/bundle 
 ENV BUNDLE_BIN=/usr/local/bundle/bin 
 ENV PATH="$BUNDLE_BIN:$PATH" 
-# Create bundle directory and give correct permissions 
+
+# create bundle directory and give correct permissions 
 RUN mkdir -p /usr/local/bundle \
     && chown -R vscode:vscode /usr/local/bundle 
-# ---------------------------------------------------------
 
-
-
-# vite
-
-
-# react 
 
 
 
