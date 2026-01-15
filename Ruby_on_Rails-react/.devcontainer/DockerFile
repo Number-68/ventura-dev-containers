@@ -1,0 +1,73 @@
+
+# installing base image.
+FROM mcr.microsoft.com/devcontainers/base:noble
+
+
+
+#installing ruby system dependencies. 
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    rustc \
+    libssl-dev \
+    libyaml-dev \
+    zlib1g-dev \
+    libgmp-dev \
+    git \
+    libreadline-dev \
+    curl \
+    ca-certificates \
+    gnupg
+
+
+
+# installing and compiling ruby from source
+# most recent stable version: 
+ARG RUBY_MAJOR=3.4
+ARG RUBY_VERSION=3.4.8
+RUN curl -fsSL https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR}/ruby-${RUBY_VERSION}.tar.gz -o ruby.tar.gz \
+    && tar -xzf ruby.tar.gz \
+    && cd ruby-${RUBY_VERSION} \
+    && ./configure \
+    && make -j$(nproc) \
+    && make install \
+    && cd .. \
+    && rm -rf ruby-${RUBY_VERSION} ruby.tar.gz
+
+
+
+
+# installing node
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" \
+        > /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+     
+
+# vite
+
+
+# react 
+
+
+
+# installing gems 
+# rails
+ARG RAILS_VERSION=7.2.3
+RUN gem install rails -v ${RAILS_VERSION}
+
+#vite for rails.
+
+
+
+# error checking
+RUN git --version && \
+    ruby --version && \
+    rails --version && \
+    node --version && \
+    npm --version
+
+

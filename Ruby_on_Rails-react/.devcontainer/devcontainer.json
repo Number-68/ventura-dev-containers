@@ -1,0 +1,16 @@
+
+{
+
+	"name": "Ventura Stack 2026",
+
+	"build": { 
+		"dockerfile": "Dockerfile" 
+	},
+
+	// for all 
+	"postCreateCommand": "([ -f Gemfile ] && bundle install || true) && ([ -f package.json ] && npm install || true)",
+
+
+	// ports 
+	"forwardPorts": [3000, 5173]
+}
