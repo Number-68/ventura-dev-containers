@@ -1,5 +1,20 @@
+
+
+
+# self medicate if needed
+set -euo pipefail
+unset BUNDLE_GEMFILE 2>/dev/null || true
+#this fixed the issue of not being able to create multiple projects in the same container
+
+
+
+
 # make project folder in overall directory.
 cd ..
+
+
+# configure project specific bundler
+bundle config set path 'vendor/bundle'
 
 # receive project name
 
@@ -14,6 +29,10 @@ if [ -z "$PROJECT_NAME" ]; then
 fi
 
 echo "Creating Ruby on Rails + React.js Project named: $PROJECT_NAME"
+
+
+echo "DEBUG: Project name is '$PROJECT_NAME'"
+
 
 
 # create project directory with project name
