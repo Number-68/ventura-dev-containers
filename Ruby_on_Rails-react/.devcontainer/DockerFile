@@ -56,7 +56,7 @@ RUN mkdir -p /usr/local/bundle \
 
 # installing gems 
 # rails
-ARG RAILS_VERSION=7.2.3
+ARG RAILS_VERSION=8.1.2
 RUN gem install rails -v ${RAILS_VERSION}
 
 # reconfigure bundle directory and give permissions
