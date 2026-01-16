@@ -23,99 +23,86 @@ if [ -z "$PROJECT_NAME" ]; then
     exit 1
 fi
 
+
+
+
+
 echo "Creating Ruby on Rails + React.js Project named: $PROJECT_NAME"
-
-
-echo "DEBUG: Project name is '$PROJECT_NAME'"
 
 
 
 # create project directory with project name
 rails new "$PROJECT_NAME" --javascript=esbuild
 
+
 # move inside folder. 
 cd "$PROJECT_NAME"
 
 
 
-# Adding project dependencies
-bundle add vite_rails
-bundle install
+# install react from npm
+npm install react react-dom
 
-mkdir -p config
 
-# manually making vite.json cause it's broke for some reason. :)
-cat << 'EOF' > config/vite.json
-{
-  "all": {
-    "sourceCodeDir": "app/frontend",
-    "watchAdditionalPaths": []
-  },
-  "development": {
-    "autoBuild": true
-  },
-  "test": {
-    "autoBuild": true
-  },
-  "production": {
-    "autoBuild": true
-  }
+# making the react entrypoint
+cat << 'EOF' > app/javascript/application.jsx
+import React from "react"
+import { createRoot } from "react-dom/client"
+
+function App() {
+    return <h1>Hello from React + ESBuild + Rails 8</h1>
+}
+
+const root = document.getElementById("app")
+if (root) {
+    createRoot(root).render(<App />)
 }
 EOF
 
 
-# create front end entrypoint :)
-mkdir -p app/frontend
-cat << 'EOF' > app/frontend/application.jsx
-import React from "react"
-import { createRoot } from "react-dom/client"
 
-const App = () => <h1>Rails + Vite + React</h1>
-
-const root = document.getElementById("app")
-if (root) createRoot(root).render(<App />)
+# replacing default mount point into rails layout 
+cat << 'EOF' > app/javascript/application.js
+import "./application.jsx"
 EOF
 
-# wire rails layous :)
-sed -i '/javascript_include_tag/d' app/views/layouts/application.html.erb
 
-# inject vite helping
-sed -i '/<head>/a \
-    <%= vite_client_tag %>\n    <%= vite_javascript_tag "application" %>' \
-    app/views/layouts/application.html.erb
 
-# add mount point
+#inject mount point into rails layout
 sed -i '/<body>/a \
     <div id="app"></div>' \
     app/views/layouts/application.html.erb
 
 
 
-# install react with npm
-npm install react react-dom vite
+
+# remove old javascript include if presnet
+
+# Remove old javascript_include_tag if present
+sed -i '/javascript_include_tag/d' app/views/layouts/application.html.erb
+
+
+# Add ESBuild tag
+sed -i '/<head>/a \
+    <%= javascript_include_tag "application", defer: true %>' \
+    app/views/layouts/application.html.erb
 
 
 
-# create a dev script inside project
+
+# Create dev script
 cat << 'EOF' > dev.sh
 #!/bin/bash
 
-# Start Rails server
-bin/rails server &
+# Start ESBuild watcher
+bin/rails javascript:build --watch &
 
-# Start Vite dev server
-bin/vite dev
+# Start Rails server
+bin/rails server
 EOF
 
-# give permissions
 chmod +x dev.sh
 
-
-#installing vite packages?
-bundle exec vite install
-
-
-#disable jsbundlind
-rm -rf app/javascript
-rm -rf app/assets/builds
+echo "Project $PROJECT_NAME created successfully!"
+echo "Run ./dev.sh to start Rails + ESBuild"
 
