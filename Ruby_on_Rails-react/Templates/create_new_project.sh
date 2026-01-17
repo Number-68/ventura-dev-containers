@@ -1,8 +1,6 @@
-
-
 # self medicate if needed
-set -euo pipefail
-unset BUNDLE_GEMFILE 2>/dev/null || true
+#set -euo pipefail
+#unset BUNDLE_GEMFILE 2>/dev/null || true
 
 # make project folder in overall directory.
 cd ..
@@ -13,8 +11,8 @@ cd ..
 
 # receive project name
 
-echo "Enter project name: " 
-read PROJECT_NAME
+read -p "Enter project name: " PROJECT_NAME
+
 
 # checking for correct input todo: make something more robust than this later.
 #       we'll use these as templates for other project wizards
@@ -76,7 +74,6 @@ sed -i '/<body>/a \
 
 
 
-# remove old javascript include if presnet
 
 # Remove old javascript_include_tag if present
 sed -i '/javascript_include_tag/d' app/views/layouts/application.html.erb
