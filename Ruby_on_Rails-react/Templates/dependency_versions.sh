@@ -1,13 +1,9 @@
-
-
 echo "=== Checking system dependencies ==="
-
 echo ""
 echo "--- Version details ---"
 echo "Ruby: $(ruby -v 2>/dev/null)"
 echo "Rails: $(rails -v 2>/dev/null)"
 echo "Node: $(node -v 2>/dev/null)"
 echo "npm: $(npm -v 2>/dev/null)"
-
 echo ""
 echo "=== Dependency check complete ==="
