@@ -87,19 +87,6 @@ sed -i '/<head>/a \
 
 
 
-# Create dev script
-cat << 'EOF' > dev.sh
-#!/bin/bash
-
-# Start ESBuild watcher
-bin/rails javascript:build --watch &
-
-# Start Rails server
-bin/rails server
-EOF
-
-chmod +x dev.sh
-
 echo "Project $PROJECT_NAME created successfully!"
-echo "Run ./dev.sh to start Rails + ESBuild"
+echo "Run bin/dev to start Rails + ESBuild"
 
