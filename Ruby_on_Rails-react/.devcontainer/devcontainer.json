@@ -12,5 +12,15 @@
 
 
 	// ports 
-	"forwardPorts": [3000, 5173]
+	"forwardPorts": [3000, 5173],
+
+
+	"remoteEnv": {
+  		"SSH_AUTH_SOCK": "/ssh-agent"
+	},
+
+	"mounts": [
+  		"source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+	]
+
 }
