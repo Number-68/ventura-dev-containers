@@ -1,7 +1,7 @@
 # commands to remember
 
 
-npx create-next-app@15.0.0 "PROJECT_NAME" \
+npx create-next-app@latest "PROJECT_NAME" \
   --ts \
   --eslint \
   --tailwind \
