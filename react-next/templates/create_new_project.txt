@@ -1,0 +1,14 @@
+# commands to remember
+
+
+npx create-next-app@15.0.0 "PROJECT_NAME" \
+  --ts \
+  --eslint \
+  --tailwind \
+  --app \
+  --src-dir \
+  --import-alias "@/*" \
+  --yes
+
+
+to install a database... 
